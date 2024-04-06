@@ -6,6 +6,10 @@ def monty_hall(cambiar_puerta, imprimir):
 
     # El participante elige una puerta aleatoria
     puerta_elegida = random.randint(1, 3)
+    
+    if imprimir:
+        print("------------------------")
+        print("Puerta elegida por el participante:", puerta_elegida)
 
     # El presentador elige una de las puertas restantes que no tiene el auto ni fue elegida por el participante
     puertas_disponibles = [1, 2, 3]
@@ -20,28 +24,37 @@ def monty_hall(cambiar_puerta, imprimir):
         puertas_disponibles.remove(puerta_elegida)
         puertas_disponibles.remove(puerta_abierta)
         puerta_elegida = puertas_disponibles[0]
+        
+        if imprimir:
+            print("El participante cambió de puerta")
 
     if imprimir == True:
         # Imprimir detalles del juego
-        print("------------------------")
-        print("Puerta elegida por el participante:", puerta_elegida)
+        if cambiar_puerta:
+            print("Puerta elegida por el participante:", puerta_elegida)
+        
         print("Puerta donde está el auto:", puerta_auto)
         print("Puerta abierta por el presentador:", puerta_abierta)
 
+        # Determinar si el participante ganó el auto
         if cambiar_puerta == True:
-            print ("El participante cambió de puerta")
+            if puerta_elegida == puerta_auto:
+                print("El participante gana el auto!")
+                print("------------------------")
+                return True
+            else:
+                print("El participante no gana el auto.")
+                print("------------------------")
         else:
             print("El participante no cambió de puerta")
-        
-
-        # Determinar si el participante ganó el auto
-        if puerta_elegida == puerta_auto:
-            print("El participante gana el auto!")
-            print("------------------------")
-            return True
-        else:
-            print("El participante no gana el auto.")
-            print("------------------------")
+            if puerta_elegida == puerta_auto:
+                print("El participante gana el auto!")
+                print("------------------------")
+                return True
+            else:
+                print("El participante no gana el auto.")
+                print("------------------------")
+                
     else:
         if puerta_elegida == puerta_auto:
             return True
@@ -61,6 +74,7 @@ def simulacion_monty_hall(cambiar_puerta, num_intentos, imprimir):
 
     print("Veces ganadas:", ganadas)
     print("Veces perdidas:", perdidas)
+    print("Probabilidad de ganar: " + str((ganadas/num_intentos)*100) + "%")
 
 # Ejemplo de uso
 cambiar_puerta = False  # Cambiar de puerta
